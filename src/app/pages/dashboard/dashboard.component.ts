@@ -26,9 +26,9 @@ export class DashboardComponent implements OnInit {
   async cargarKPIs(forzar = false) {
     try {
       const [productos, usuarios, facturas] = await Promise.all([
-        firstValueFrom(this.http.get<any[]>('http://adminrest.runasp.net/api/gestion/productos')),
-        firstValueFrom(this.http.get<any[]>('http://adminrest.runasp.net/api/gestion/usuarios')),
-        firstValueFrom(this.http.get<any[]>('http://adminrest.runasp.net/api/gestion/facturas'))
+        firstValueFrom(this.http.get<any[]>('https://adminrest.runasp.net/api/gestion/productos')),
+        firstValueFrom(this.http.get<any[]>('https://adminrest.runasp.net/api/gestion/usuarios')),
+        firstValueFrom(this.http.get<any[]>('https://adminrest.runasp.net/api/gestion/facturas'))
       ]);
       this.totalProductos = productos.length;
       this.totalUsuarios = usuarios.length;

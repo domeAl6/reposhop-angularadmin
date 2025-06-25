@@ -14,7 +14,7 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-  apiURL = 'http://adminrest.runasp.net/api/gestion/usuarios';
+  apiURL = 'https://adminrest.runasp.net/api/gestion/usuarios';
   usuarios: any[] = [];
   usuariosFiltrados: any[] = [];
   usuarioActual: any = {};

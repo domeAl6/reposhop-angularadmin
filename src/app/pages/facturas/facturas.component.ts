@@ -38,11 +38,11 @@ interface Usuario {
   styleUrls: ['./facturas.component.css']
 })
 export class FacturasComponent implements OnInit {
-  API_FACTURAS = 'http://adminrest.runasp.net/api/gestion/facturas';
-  API_ESTADO = 'http://adminrest.runasp.net/api/gestion/facturas/update';
-  API_DETALLE = 'http://adminrest.runasp.net/api/gestion/detallefactura';
-  API_PRODUCTOS = 'http://adminrest.runasp.net/api/gestion/productos';
-  API_USUARIOS = 'http://adminrest.runasp.net/api/gestion/usuarios';
+  API_FACTURAS = 'https://adminrest.runasp.net/api/gestion/facturas';
+  API_ESTADO = 'https://adminrest.runasp.net/api/gestion/facturas/update';
+  API_DETALLE = 'https://adminrest.runasp.net/api/gestion/detallefactura';
+  API_PRODUCTOS = 'https://adminrest.runasp.net/api/gestion/productos';
+  API_USUARIOS = 'https://adminrest.runasp.net/api/gestion/usuarios';
 
   facturas: Factura[] = [];
   facturasMostradas: Factura[] = [];

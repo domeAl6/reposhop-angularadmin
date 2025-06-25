@@ -15,7 +15,7 @@ declare function alert(message?: any): void;
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
-  apiURL = 'http://adminrest.runasp.net/api/gestion/productos';
+  apiURL = 'https://adminrest.runasp.net/api/gestion/productos';
   productos: any[] = [];
   productosFiltrados: any[] = [];
   productoSeleccionado: any = {};

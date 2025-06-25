@@ -13,8 +13,8 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
   styleUrls: ['./estadisticas.component.css']
 })
 export class EstadisticasComponent implements OnInit {
-  API_FACTURAS = 'http://adminrest.runasp.net/api/gestion/facturas';
-  API_PRODUCTOS = 'http://adminrest.runasp.net/api/gestion/productos';
+  API_FACTURAS = 'https://adminrest.runasp.net/api/gestion/facturas';
+  API_PRODUCTOS = 'https://adminrest.runasp.net/api/gestion/productos';
 
   productosMap: { [key: number]: string } = {};
   ventasChart: any = null;
