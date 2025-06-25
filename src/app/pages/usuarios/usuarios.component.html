@@ -1,0 +1,222 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <main class="flex-fill content">
+    <h1 class="titulo-principal">Gestión de Usuarios</h1>
+
+    <div class="mb-3 d-flex gap-2 flex-wrap justify-content-center">
+      <button class="btn btn-pastel-green" (click)="nuevoUsuario()">➕ Nuevo Usuario</button>
+      <button class="btn btn-pastel-blue" (click)="abrirModal('modalBuscarUsuario')">🔎 Buscar por nombre</button>
+      <button class="btn btn-pastel-yellow" (click)="mostrarTodos()">📋 Mostrar todos</button>
+      <button class="btn btn-pastel-purple text-black shadow-soft mt-2 mt-md-0" (click)="refrescarUsuarios()">🔄 Refrescar</button>
+    </div>
+
+    <div class="d-flex justify-content-center mb-4">
+      <input type="text" class="form-control buscador" placeholder="Buscar por nombre..." [(ngModel)]="filtroNombre"
+        (input)="filtrarPorNombre($event)" />
+    </div>
+
+    <!-- Spinner de carga -->
+    <div *ngIf="cargando" class="text-center my-5">
+      <div class="spinner-border text-primary mb-3" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted">Cargando usuarios...</p>
+    </div>
+
+    <div id="usuarios-container" *ngIf="!cargando">
+      <div *ngFor="let u of usuariosFiltrados" class="pastel-card">
+        <h5>{{ u.nombre }} {{ u.apellido }}</h5>
+        <p>📧 {{ u.email }}</p>
+        <p>📞 {{ u.telefono }}</p>
+        <p>🪪 {{ u.cedula }}</p>
+        <p>🧍 {{ u.username }}</p>
+        <p>🎂 {{ u.fecha_nacimiento?.split('T')[0] }}</p>
+        <p>🚻 {{ u.genero }}</p>
+        <p>🏡 {{ u.direccion }}</p>
+        <div class="card-buttons">
+          <button class="btn btn-pastel-blue shadow-soft" (click)="editarUsuario(u)">Editar</button>
+          <button class="btn btn-pastel-pink shadow-soft" (click)="eliminarUsuario(u.id_usuario)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Formulario Usuario Mejorado y Validado -->
+<div class="modal fade" id="modalUsuario" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content pastel-card p-0" style="overflow: hidden;">
+      <form #usuarioForm="ngForm" (ngSubmit)="guardarUsuario(usuarioForm)" autocomplete="off">
+        <div *ngIf="mensajeCamposFaltantes" class="alert alert-warning text-center py-2 rounded-3 shadow-sm">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          ¡Debes completar todos los campos obligatorios para guardar el usuario!
+        </div>
+        <div *ngIf="mensajeErrores" class="alert alert-danger text-center py-2">
+          No se puede guardar porque los datos tienen errores.
+        </div>
+
+        <!-- Header sticky -->
+        <div class="modal-header border-0 sticky-top bg-white" style="z-index:2;">
+          <h5 class="modal-title d-flex align-items-center gap-2">
+            <span [ngClass]="modoEdicion ? 'text-warning' : 'text-success'">
+              <i class="bi" [ngClass]="modoEdicion ? 'bi-pencil-square' : 'bi-person-plus'"></i>
+            </span>
+            {{ modoEdicion ? 'Editar' : 'Nuevo' }} Usuario
+          </h5>
+          <button class="btn-close" data-bs-dismiss="modal" type="button" (click)="cerrarModal('modalUsuario', usuarioForm)"></button>
+        </div>
+        <!-- Body con grid responsive de 3 columnas -->
+        <div class="modal-body py-4 px-3 px-md-5">
+          <div class="container-fluid">
+            <div class="row g-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Nombre</label>
+                <!-- Nombre -->
+                <input class="form-control"
+                       [(ngModel)]="usuarioActual.nombre"
+                       name="nombre"
+                       required
+                       #nombre="ngModel"
+                       (input)="soloLetras($event)">
+                <div *ngIf="nombre.invalid && nombre.touched" class="text-danger small">
+                  Ingrese nombre correcto
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Apellido</label>
+                <!-- Apellido -->
+                <input class="form-control"
+                       [(ngModel)]="usuarioActual.apellido"
+                       name="apellido"
+                       required
+                       #apellido="ngModel"
+                       (input)="soloLetras($event)">
+                <div *ngIf="apellido.invalid && apellido.touched" class="text-danger small">
+                  Ingrese apellido correcto
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Email</label>
+                <input class="form-control"
+                       [(ngModel)]="usuarioActual.email"
+                       name="email"
+                       required
+                       type="email"
+                       pattern="^[^@]+@[^@]+\.[^@]+$"
+                       #email="ngModel">
+                <div *ngIf="email.invalid && email.touched" class="text-danger small">
+                  Ingrese email válido
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Teléfono</label>
+                <input class="form-control" [(ngModel)]="usuarioActual.telefono" name="telefono" required pattern="^[0-9]{10}$" maxlength="10" #telefono="ngModel" (input)="soloNumeros($event, 10)">
+                <div *ngIf="telefono.invalid && telefono.touched" class="text-danger small">
+                  Ingrese teléfono correcto
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Username</label>
+                <input class="form-control" [(ngModel)]="usuarioActual.username" name="username" required #username="ngModel">
+                <div *ngIf="username.invalid && username.touched" class="text-danger small">
+                  Requerido
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Password</label>
+                <input class="form-control" [(ngModel)]="usuarioActual.password" name="password" required [type]="modoEdicion ? 'text' : 'password'" #password="ngModel">
+                <div *ngIf="password.invalid && password.touched" class="text-danger small">
+                  Requerido
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Cédula</label>
+                <input class="form-control"
+                       [(ngModel)]="usuarioActual.cedula"
+                       name="cedula"
+                       required
+                       pattern="^[0-9]{10}$"
+                       maxlength="10"
+                       #cedula="ngModel"
+                       (input)="soloNumeros($event, 10)">
+                <div *ngIf="cedula.invalid && cedula.touched" class="text-danger small">
+                  Ingrese cédula válida
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Dirección</label>
+                <input class="form-control" [(ngModel)]="usuarioActual.direccion" name="direccion" required #direccion="ngModel">
+                <div *ngIf="direccion.invalid && direccion.touched" class="text-danger small">
+                  Requerida
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <label class="form-label">Género</label>
+              <select class="form-select" [(ngModel)]="usuarioActual.genero" name="genero" required #genero="ngModel">
+                  <option value="" disabled>Seleccionar...</option>
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                </select>
+                <div *ngIf="genero.invalid && genero.touched" class="text-danger small">
+                  Requerido
+                </div>
+              </div>
+              <!-- Fecha y botones en la misma fila -->
+              <div class="col-12 d-flex align-items-end justify-content-between gap-2">
+                <div class="flex-grow-1 d-flex flex-column align-items-center">
+                  <label class="form-label text-center w-100">Fecha de nacimiento</label>
+                  <input type="date"
+                         class="form-control fecha-input-grande mx-auto"
+                         style="max-width: 260px;"
+                         [(ngModel)]="usuarioActual.fecha_nacimiento"
+                         name="fecha_nacimiento"
+                         required
+                         [max]="maxFecha"
+                         #fecha_nacimiento="ngModel">
+                  <div *ngIf="fecha_nacimiento.invalid && fecha_nacimiento.touched" class="text-danger small">
+                    Requerido
+                  </div>
+                </div>
+                <div class="d-flex gap-2 ms-2">
+                  <button type="submit" class="btn btn-primary shadow-soft">
+                    <i class="bi bi-save"></i> Guardar
+                  </button>
+                  <button type="button" class="btn btn-secondary shadow-soft"
+        (click)="cerrarModal('modalUsuario', usuarioForm)" data-bs-dismiss="modal">
+  Cancelar
+</button>
+                </div>
+              </div>
+              <!-- Fin de la fila de fecha y botones -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Buscar Usuario -->
+<div class="modal fade" id="modalBuscarUsuario" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content pastel-card text-center p-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title w-100 text-danger fw-bold">Buscar Usuario</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <select [(ngModel)]="nombreSeleccionado" class="form-select text-center mb-3"
+          style="max-width: 400px; margin: auto;">
+          <option value="">-- Selecciona Nombre --</option>
+          <option *ngFor="let u of usuarios" [value]="u.nombre + ' ' + u.apellido">{{ u.nombre }} {{ u.apellido }}
+          </option>
+        </select>
+        <div class="d-flex justify-content-center gap-2">
+          <button class="btn btn-primary px-4 shadow-soft" (click)="buscarPorNombre()">Buscar</button>
+          <button class="btn btn-secondary px-4 shadow-soft" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

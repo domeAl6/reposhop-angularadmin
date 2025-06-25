@@ -265,11 +265,102 @@ input[type="month"] {
     height: 240px !important;
   }
 }
-/* Agrega esto a tu archivo de estilos global o componente */
-.btn-pastel-purple {
-  background-color: #e0bbff;
+.pastel-card {
+  background-color: #fffaf4;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.pastel-card:hover {
+  transform: scale(1.01);
+}
+
+.chart-container {
+  width: 100%;
+  min-height: 300px;
+}
+.pastel-card {
+  background-color: #fffaf4;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #fce4ec;
+  transition: transform 0.2s ease;
+}
+
+.pastel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.btn-pastel-blue {
+  background-color: #a7d0f5;
+  color: #004080;
   border: none;
 }
-.btn-pastel-purple:hover {
-  background-color: #d1aaff;
+
+.btn-pastel-blue:hover {
+  background-color: #8bc3f3;
+}
+
+.border-pink {
+  border: 2px solid #fcb8d2;
+}
+
+.chart-container {
+  width: 100%;
+  min-height: 300px;
+  position: relative;
+}
+.pastel-card {
+  background-color: #fffaf4;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #fce4ec;
+  transition: transform 0.2s ease;
+  min-height: 420px;
+}
+
+.pastel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.btn-pastel-blue {
+  background-color: #a7d0f5;
+  color: #004080;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-pastel-blue:hover {
+  background-color: #8bc3f3;
+}
+
+.border-pink {
+  border: 2px solid #fcb8d2;
+}
+
+.chart-container {
+  width: 100%;
+  min-height: 300px;
+  position: relative;
+}
+.chart-container {
+  position: relative;
+  min-height: 300px;
+}
+.titulo-principal {
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: #222;
 }

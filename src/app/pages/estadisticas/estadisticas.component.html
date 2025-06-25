@@ -1,0 +1,32 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <main class="content container mt-4" style="margin-left: 240px;">
+    <div class="estadisticas-titulo mb-4 d-flex align-items-center gap-2">
+      <h1 class="titulo-principal m-0">Estadísticas de ventas</h1>
+    </div>
+
+    <div class="estadisticas-row d-flex flex-wrap gap-4 justify-content-center">
+      <!-- Producto más vendido -->
+      <div class="estadisticas-card card shadow-sm rounded p-3" style="width: 100%; max-width: 600px; flex: 1 1 45%;">
+        <h5 class="text-center">🥇 Producto más vendido</h5>
+        <div class="chart-container" style="position: relative; height: 300px;">
+          <canvas #masVendidoChartCanvas></canvas>
+        </div>
+      </div>
+
+      <!-- Ventas por mes -->
+      <div class="estadisticas-card card shadow-sm rounded p-3" style="width: 100%; max-width: 600px; flex: 1 1 45%;">
+        <h5 class="text-center">📅 Ventas por mes</h5>
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <input type="month" [(ngModel)]="desdeMes" class="form-control" style="flex:1; min-width:150px;" />
+          <input type="month" [(ngModel)]="hastaMes" class="form-control" style="flex:1; min-width:150px;" />
+          <button class="btn btn-primary" (click)="cargarVentasTotales()">Filtrar</button>
+        </div>
+        <div class="chart-container" style="position: relative; height: 300px;">
+          <canvas #ventasTotalesChartCanvas></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

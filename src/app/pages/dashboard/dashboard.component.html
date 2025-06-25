@@ -1,0 +1,91 @@
+<div class="d-flex min-vh-100">
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenedor principal: dashboard + gif lateral -->
+  <div class="d-flex flex-grow-1 flex-wrap dashboard-wrapper" style="min-height: 100vh;">
+
+    <!-- Contenido principal del dashboard -->
+    <main class="content p-4 dashboard flex-grow-1 d-flex align-items-center" style="min-height: 100vh;">
+      <div class="container">
+        <!-- Cabecera: título y botón alineados -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 class="titulo-principal m-0">Dashboard</h1>
+          <button class="btn btn-pastel-blue shadow-soft" (click)="refrescar()">🔄 Refrescar</button>
+        </div>
+
+        <!-- Tarjetas KPI -->
+        <div class="row row-cols-1 row-cols-md-2 g-4 align-items-stretch" style="min-height: 400px;">
+          <!-- Productos -->
+          <div class="col d-flex">
+            <div class="pastel-card card flex-fill h-100">
+              <!-- Contenido de la tarjeta de productos -->
+              <a routerLink="/productos" class="kpi-link text-decoration-none">
+                <div class="card-body">
+                  <img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" alt="Productos">
+                  <h2 class="text-primary fw-bold fs-2">{{ totalProductos }}</h2>
+                  <p class="text-muted fw-semibold">Productos</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Usuarios -->
+          <div class="col d-flex">
+            <div class="pastel-card card flex-fill h-100">
+              <!-- Contenido de la tarjeta de usuarios -->
+              <a routerLink="/usuarios" class="kpi-link text-decoration-none">
+                <div class="card-body">
+                  <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Usuarios">
+                  <h2 class="text-primary fw-bold fs-2">{{ totalUsuarios }}</h2>
+                  <p class="text-muted fw-semibold">Usuarios</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Facturas -->
+          <div class="col d-flex">
+            <div class="pastel-card card flex-fill h-100">
+              <!-- Contenido de la tarjeta de facturas -->
+              <a routerLink="/facturas" class="kpi-link text-decoration-none">
+                <div class="card-body">
+                  <img src="https://cdn-icons-png.flaticon.com/512/4436/4436481.png" alt="Facturas">
+                  <h2 class="text-primary fw-bold fs-2">{{ totalFacturas }}</h2>
+                  <p class="text-muted fw-semibold">Facturas</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Ventas Totales -->
+          <div class="col d-flex">
+            <div class="pastel-card card flex-fill h-100">
+              <!-- Contenido de la tarjeta de ventas totales -->
+              <a routerLink="/estadisticas" class="kpi-link text-decoration-none">
+                <div class="card-body">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" alt="Ventas Totales">
+                  <h2 class="text-primary fw-bold fs-2">${{ ventasTotales.toFixed(2) }}</h2>
+                  <p class="text-muted fw-semibold">Ventas Totales</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Columna derecha con video decorativo -->
+    <aside class="gif-panel d-none d-xl-flex align-items-center justify-content-center p-3"
+           style="min-width: 320px; max-width: 340px; height: 100vh; position: sticky; top: 0;">
+      <video
+        src="https://res.cloudinary.com/db4de2xkr/video/upload/v1750735633/ncg17ezzoxxos13qqwqw.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+        class="img-fluid rounded shadow"
+        style="max-width: 100%; max-height: 90vh; object-fit: cover;"
+      ></video>
+    </aside>
+  </div>
+</div>

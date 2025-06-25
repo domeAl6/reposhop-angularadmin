@@ -265,11 +265,171 @@ input[type="month"] {
     height: 240px !important;
   }
 }
-/* Agrega esto a tu archivo de estilos global o componente */
 .btn-pastel-purple {
   background-color: #e0bbff;
   border: none;
 }
 .btn-pastel-purple:hover {
   background-color: #d1aaff;
+}
+/* Modal mejorado */
+.modal-content.pastel-card {
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  border: none;
+  padding: 0;
+  background: #fff2e9;
+}
+
+.modal-header, .modal-footer {
+  border: none;
+  background: #fff2e9;
+}
+
+.modal-footer {
+  border-top: 1px solid #f3e1d6;
+}
+
+.modal-body {
+  background: #fff;
+  border-radius: 0 0 18px 18px;
+}
+
+.modal-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #222;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #a64ac9;
+  margin-bottom: 0.3rem;
+}
+
+.form-control, .form-select {
+  border-radius: 10px;
+  border: 1.5px solid #e0bbff;
+  background: #fffafc;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #a64ac9;
+  box-shadow: 0 0 0 2px #e0bbff44;
+}
+
+.btn-primary {
+  background: #a64ac9;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.2s;
+}
+.btn-primary:hover {
+  background: #8e24aa;
+}
+
+.btn-secondary {
+  background: #f7c6c7;
+  color: #880e4f;
+  border: none;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.2s;
+}
+.btn-secondary:hover {
+  background: #f48fb1;
+  color: #fff;
+}
+
+@media (max-width: 991px) {
+  .modal-dialog {
+    max-width: 98vw;
+    margin: 0.5rem auto;
+  }
+  .modal-body {
+    padding: 1rem !important;
+  }
+}
+
+/* Spinner de carga */
+.spinner-border {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-width: 3px;
+}
+
+.spinner-border.text-primary {
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mensajes de éxito/error */
+.toast {
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+.toast-success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.toast-error {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+/* Animaciones */
+.fade {
+  transition: opacity 0.3s ease;
+}
+
+.show {
+  opacity: 1 !important;
+}
+
+.hide {
+  opacity: 0 !important;
+}
+
+/* Personaliza la flecha del select para que sea más notoria */
+.form-select {
+  position: relative;
+  background-color: #fffafc;
+  border: 1.5px solid #e0bbff;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #6d4c41;
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 2.5rem; /* espacio para la flecha */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='purple' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5.516 7.548a1 1 0 0 1 1.415-.032L10 10.293l3.07-2.777a1 1 0 1 1 1.383 1.447l-3.777 3.414a1 1 0 0 1-1.383 0l-3.777-3.414a1 1 0 0 1-.032-1.415z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2em;
+}
+
+.form-select:focus {
+  border-color: #a64ac9;
+  box-shadow: 0 0 0 2px #e0bbff44;
+}
+.titulo-principal {
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: #222;
 }

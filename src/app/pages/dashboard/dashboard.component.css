@@ -1,0 +1,127 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fffaf7;
+}
+
+.dashboard {
+  background-color: #fffaf7;
+  min-height: 100vh;
+}
+
+.titulo-principal {
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: #222;
+}
+
+.btn-pastel-blue {
+  background-color: #cce5ff;
+  color: #004085;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+.btn-pastel-blue:hover {
+  background-color: #b8daff;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+}
+
+.kpi-link {
+  text-decoration: none;
+}
+
+.pastel-card {
+  background-color: #fff2e9;
+  border-radius: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInZoom 0.5s ease both;
+}
+.pastel-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-body img {
+  width: 64px;
+  height: auto;
+  animation: floatIcon 2s ease-in-out infinite;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+@keyframes fadeInZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatIcon {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.gif-decorativo {
+  animation: fadeInZoom 0.6s ease-in-out both;
+  z-index: 0;
+}
+.dashboard-wrapper {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.gif-panel {
+  width: 300px;
+  background-color: #fffaf7;
+  border-left: 2px solid #fce7dc;
+}
+
+.gif-panel img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+  animation: floatIcon 3s ease-in-out infinite;
+}
+.pastel-card.card {
+  min-height: 140px; /* Antes: 220px */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gif-panel {
+  min-width: 320px;
+  max-width: 340px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background: #fffaf7;
+  z-index: 1;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.03);
+}

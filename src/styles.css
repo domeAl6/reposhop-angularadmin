@@ -1,1 +1,267 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-rose: #f7c6c7;
+  --color-beige: #fff2e1;
+  --color-green: #c8e6c9;
+  --color-gold: #f9c784;
+  --color-cream: #fff9f4;
+  --color-shadow: rgba(0, 0, 0, 0.08);
+  --text-dark: #3d3d3d;
+  --accent: #e98074;
+  --accent-hover: #e05c53;
+
+  --pastel-green: #d2f8d2;
+  --pastel-green-text: #215e21;
+  --pastel-blue: #cde7ff;
+  --pastel-blue-text: #0b3d91;
+  --pastel-yellow: #fff3b0;
+  --pastel-yellow-text: #6d4c41;
+  --pastel-pink: #ffc4d6;
+  --pastel-pink-text: #880e4f;
+}
+
+/* Base */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-cream);
+  overflow-x: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-beige);
+  box-shadow: 2px 0 10px var(--color-shadow);
+  padding: 1rem;
+}
+
+.sidebar .logo {
+  font-size: 1.8rem;
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sidebar .nav-link {
+  display: block;
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: background 0.3s, color 0.3s;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background-color: var(--pastel-pink);
+  color: var(--pastel-pink-text);
+}
+
+/* Contenido principal */
+main.content {
+  margin-left: 240px;
+  padding: 2rem;
+  max-width: calc(100% - 240px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Botones */
+.btn {
+  border-radius: 10px;
+  padding: 0.5rem 1.1rem;
+  font-weight: 500;
+  border: none;
+  box-shadow: 0 4px 8px var(--color-shadow);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+}
+
+.btn-pastel-green { background-color: var(--pastel-green); color: var(--pastel-green-text); }
+.btn-pastel-blue { background-color: var(--pastel-blue); color: var(--pastel-blue-text); }
+.btn-pastel-yellow { background-color: var(--pastel-yellow); color: var(--pastel-yellow-text); }
+.btn-pastel-pink { background-color: var(--pastel-pink); color: var(--pastel-pink-text); }
+
+/* Buscador */
+.buscador {
+  max-width: 500px;
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+/* Estados */
+.estado-label {
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.estado-act { background-color: #c8facc; color: #22543d; }
+.estado-ina { background-color: #dcdcdc; color: #555; }
+
+/* Estadísticas */
+.estadisticas-titulo {
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.estadisticas-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.estadisticas-card {
+  flex: 1 1 320px;
+  background-color: var(--color-beige);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px var(--color-shadow);
+  min-height: 400px;
+}
+
+/* Inputs tipo mes */
+input[type="month"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Tarjetas pastel */
+.pastel-card {
+  background-color: var(--color-beige);
+  border-radius: 20px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 10px var(--color-shadow);
+  transition: transform 0.2s ease;
+  text-align: center;
+}
+
+.pastel-card:hover {
+  transform: scale(1.02);
+}
+
+/* Grillas */
+#productos-container,
+#usuarios-container,
+#usuariosGrid,
+#facturas-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Tarjetas producto/usuario */
+#productos-container .pastel-card,
+#usuarios-container .pastel-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 420px;
+  max-width: 320px;
+  margin: auto;
+  padding: 1.25rem;
+}
+
+.pastel-card img {
+  width: 100%;
+  max-width: 200px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Dashboard KPI */
+.dashboard .card.pastel-card {
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard .card-body {
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.dashboard .card-body img {
+  max-width: 48px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard h2.fs-2 {
+  font-size: 1.6rem !important;
+}
+
+.dashboard p {
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  main.content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .estadisticas-titulo {
+    font-size: 2rem;
+  }
+
+  .estadisticas-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .estadisticas-card {
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  canvas {
+    height: 240px !important;
+  }
+}

@@ -1,0 +1,140 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <main class="flex-fill content container py-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap mb-3">
+      <h1 class="titulo-principal mb-0">Gestión de Facturas</h1>
+    </div>
+
+    <div class="mb-3 d-flex gap-2 flex-wrap justify-content-center">
+      <button class="btn btn-pastel-blue shadow-soft" (click)="abrirModalPorId()">🔍 Buscar por ID</button>
+      <button class="btn btn-pastel-blue shadow-soft" (click)="abrirModalPorUsuario()">👤 Buscar por Cliente</button>
+      <button class="btn btn-pastel-yellow shadow-soft" (click)="cargarFacturas()">📋 Mostrar todas</button>
+      <button class="btn btn-pastel-purple text-black shadow-soft mt-2 mt-md-0" (click)="refrescarFacturas()">🔄 Refrescar</button>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <input [(ngModel)]="buscarTexto" (input)="filtrarPorTexto()" class="form-control buscador mb-4"
+        placeholder="Buscar por nombre de cliente..." />
+    </div>
+
+    <!-- Spinner de carga inicial -->
+    <div *ngIf="cargando" class="text-center my-5">
+      <div class="spinner-border text-primary mb-3" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted">Cargando facturas...</p>
+    </div>
+
+    <div id="facturas-container" *ngIf="!cargando">
+      <div *ngFor="let f of facturasMostradas" class="pastel-card text-center d-flex flex-column p-3 mb-3">
+        <h5 class="fw-bold text-danger">Factura ID: {{ f.id_factura }}</h5>
+        <p><strong>Cliente:</strong> {{ getNombreUsuario(f.id_usuario) }}</p>
+        <p><strong>Descripción:</strong> {{ f.fac_descripcion }}</p>
+        <p><strong>Fecha:</strong> {{ f.fac_fechahora.split('T')[0] }}</p>
+        <p><strong>Subtotal:</strong> ${{ f.fac_subtotal.toFixed(2) }}</p>
+        <p><strong>Total:</strong> ${{ f.fac_total.toFixed(2) }}</p>
+        <p><strong>Estado:</strong>
+          <span class="badge" [ngClass]="{
+            'bg-success': f.estado_fac === 'CRE',
+            'bg-warning text-dark': f.estado_fac === 'PAG',
+            'bg-secondary': f.estado_fac !== 'CRE' && f.estado_fac !== 'PAG'
+          }">{{ f.estado_fac }}</span>
+        </p>
+        <button class="btn btn-pastel-blue btn-sm my-1" (click)="verDetalle(f)">🧾 Ver Detalle</button>
+        <button class="btn btn-outline-dark btn-sm mt-2"
+          (click)="cambiarEstado(f.id_factura, f.estado_fac === 'CRE' ? 'PAG' : 'CRE')">
+          Cambiar a {{ f.estado_fac === 'CRE' ? 'PAG' : 'CRE' }}
+        </button>
+      </div>
+
+      <div *ngIf="facturasMostradas.length < facturas.length" class="text-center my-4 fade-in">
+        <div class="spinner-border text-primary mb-2" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="text-muted">Cargando más facturas...</p>
+      </div>
+    </div>
+
+    <!-- Modal: Buscar por ID -->
+    <div class="modal fade" id="modalBuscarId" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pastel-card text-center p-4">
+          <h4 class="text-danger fw-bold">Buscar Factura por ID</h4>
+          <select class="form-select mb-3" [(ngModel)]="facturaIdSeleccionada">
+            <option value="">-- Selecciona ID --</option>
+            <option *ngFor="let f of facturas" [value]="f.id_factura">{{ f.id_factura }}</option>
+          </select>
+          <div class="d-flex justify-content-center gap-2">
+            <button class="btn btn-primary shadow-soft" (click)="buscarPorId()">Buscar</button>
+            <button class="btn btn-secondary shadow-soft" (click)="cerrarModal('#modalBuscarId')">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Buscar por Cliente -->
+    <div class="modal fade" id="modalBuscarUsuario" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pastel-card text-center p-4">
+          <h4 class="text-danger fw-bold">Buscar Facturas por Cliente</h4>
+          <select class="form-select mb-3" [(ngModel)]="usuarioSeleccionado">
+            <option value="">-- Selecciona Cliente --</option>
+            <option *ngFor="let id of (usuariosMap | keyvalue)" [value]="id.key">{{ id.value }}</option>
+          </select>
+          <div class="d-flex justify-content-center gap-2">
+            <button class="btn btn-primary shadow-soft" (click)="buscarPorUsuario()">Buscar</button>
+            <button class="btn btn-secondary shadow-soft" (click)="cerrarModal('#modalBuscarUsuario')">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Detalle de Factura -->
+    <div class="modal fade" id="modalDetalleFactura" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content pastel-card p-4 border shadow">
+          <div class="modal-header border-0 pb-0">
+            <h4 class="modal-title text-center w-100 text-danger fw-bold">🧾 Detalle de Factura</h4>
+            <button type="button" class="btn-close" (click)="cerrarModal('#modalDetalleFactura')" aria-label="Close"></button>
+          </div>
+
+          <div class="row text-start my-3" *ngIf="detalleFactura">
+            <div class="col-md-6">
+              <p><strong>Factura ID:</strong> {{ detalleFactura.id_factura }}</p>
+              <p><strong>Cliente:</strong> {{ getNombreUsuario(detalleFactura.id_usuario) }}</p>
+              <p><strong>Fecha:</strong> {{ detalleFactura.fac_fechahora.split('T')[0] }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Descripción:</strong> {{ detalleFactura.fac_descripcion }}</p>
+              <p><strong>Subtotal:</strong> ${{ detalleFactura.fac_subtotal.toFixed(2) }}</p>
+              <p><strong>Total:</strong> ${{ detalleFactura.fac_total.toFixed(2) }}</p>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <div>
+            <h5 class="text-center fw-bold text-primary mb-3">Productos</h5>
+            <div *ngIf="detalleProductos.length > 0; else sinProductos">
+              <div *ngFor="let d of detalleProductos" class="card pastel-card mb-3 shadow-sm">
+                <div class="card-body d-flex justify-content-between">
+                  <div>
+                    <p class="mb-1"><strong>Producto:</strong> {{ d.nombre }}</p>
+                    <p class="mb-1"><strong>Cantidad:</strong> {{ d.cantidad }}</p>
+                  </div>
+                  <div class="text-end">
+                    <p class="mb-1"><strong>Valor:</strong> ${{ d.valor }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #sinProductos>
+              <p class="text-center text-muted">No hay productos asociados a esta factura.</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
