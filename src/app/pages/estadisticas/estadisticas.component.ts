@@ -70,7 +70,7 @@ export class EstadisticasComponent implements OnInit {
       await Promise.allSettled(
         facturas.map(async (f: any) => {
           try {
-            const detalles: any = await this.http.get(`http://adminrest.runasp.net/api/gestion/detallefactura/${f.id_factura}`).toPromise();
+            const detalles: any = await this.http.get(`https://adminrest.runasp.net/api/gestion/detallefactura/${f.id_factura}`).toPromise();
             const detallesArray = Array.isArray(detalles) ? detalles : [detalles];
             detallesArray.forEach((d: any) => {
               const id = d.id_producto;
