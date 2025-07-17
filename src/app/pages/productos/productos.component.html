@@ -24,7 +24,7 @@
       </div>
 
       <div *ngFor="let p of productosFiltrados; let i = index" class="pastel-card {{ colores[i % colores.length] }} text-center d-flex flex-column">
-        <img [src]="p.img" class="card-img-top img-hover mb-2" [alt]="p.pro_nombre" style="height: 150px; object-fit: cover;">
+        <img [src]="p.img.split(',')[0]" class="card-img-top img-hover mb-2" [alt]="p.pro_nombre" style="height: 150px; object-fit: cover;">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title"><strong>{{ p.pro_nombre }}</strong></h5>
           <p class="card-text">{{ p.pro_description }}</p>
